@@ -11,9 +11,6 @@ jobs:
   tag-and-export:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '--skip-ci')"
-    env:
-      BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12
@@ -30,7 +27,7 @@ jobs:
         run: |
           bit config set analytics_reporting false
           bit config set anonymous_reporting false
-          bit config set user.token $BIT_TOKEN
+          bit config set user.token ${{ secrets.BIT_TOKEN }}
       - name: Install packages using bit
         run: bit install
       - name: Hard-tag pending components
